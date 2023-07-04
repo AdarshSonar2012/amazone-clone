@@ -11,7 +11,7 @@ function Home() {
         
          
           <div className='home-row'>
-            <Product title='The lean startup' price={29.99} image='https://m.media-amazon.com/images/I/81-QB7nDh4L.jpg' rating={5}/> 
+            <Product  id="49538000" title='The lean startup' price={29.99} image='https://m.media-amazon.com/images/I/81-QB7nDh4L.jpg' rating={5}/> 
             <Product id="49538094"
                 title="Kenwood kMix Stand Mixer for
                 Baking, Stylish Kitchen Mixer with
@@ -24,11 +24,11 @@ function Home() {
           </div>  
 
           <div className='home-row'>
-            <Product title='Samsung LC49RG90SSUXEN'
+            <Product id="56737094" title='Samsung LC49RG90SSUXEN'
             price={199.99}
             rating={3}
             image='https://m.media-amazon.com/images/I/81rus0UFhsL.jpg' />
-            <Product title='Samsung LC49RG90SSUXEN'
+            <Product id="88598088" title='Samsung LC49RG90SSUXEN'
             price={19.99}
             rating={5}
             image='https://m.media-amazon.com/images/I/81rus0UFhsL.jpg' />
@@ -36,7 +36,7 @@ function Home() {
           </div>
 
           <div className='home-row'>
-          <Product title="Samsung LC49RG90SSUXEN 49'" price={1094.98} rating={4} image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1NCpdAFHN6QS7LvZrX4UrhlbiGwtON8vF3m7NBtW1tjwPQrQu_t3fEt0XvSpuq-4CliU&usqp=CAU' />
+          <Product id="50000000" title="Samsung LC49RG90SSUXEN 49'" price={1094.98} rating={4} image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1NCpdAFHN6QS7LvZrX4UrhlbiGwtON8vF3m7NBtW1tjwPQrQu_t3fEt0XvSpuq-4CliU&usqp=CAU' />
           </div>
         </div>
     </div>

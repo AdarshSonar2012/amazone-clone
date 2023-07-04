@@ -2,14 +2,17 @@ import React from 'react'
 import "./Product.css"
 import { useStateValue } from './StateProvider';
 
-function Product({title,image,price,rating}) {
+function Product({id,title,image,price,rating}) {
 // eslint-disable-next-line
-    const [state, dispatch] = useStateValue();
+    const [{basket}, dispatch] = useStateValue();
+
+    console.log("this is a basket", basket)
 
     const addToBasket = () =>{
         dispatch({
           type: "ADD_TO_BASKET",
           item: {
+            id: id,
             title: title,
             image: image,
             price: price, 
