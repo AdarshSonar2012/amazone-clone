@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 //import { getAuth } from "./Firebase/auth";
 //import { createUser } from "./Firebase";
 import {
@@ -10,15 +9,12 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { firebaseApp } from "./Firebase";
-=======
 import { auth } from "./Firebase";
->>>>>>> f118cd279fac0332c8a77f5f36373816aa21da58
 
 function Login() {
   const history = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-<<<<<<< HEAD
   const auth = getAuth(firebaseApp);
 
   const signIn = (e) => {
@@ -58,22 +54,6 @@ function Login() {
     //     }
     //   })
     //   .catch((error) => alert(error.message));
-=======
-  const signIn = (e) => {
-    e.preventDefault();
-  };
-  const register = (e) => {
-    e.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((auth) => {
-        console.log(auth);
-        if (auth) {
-          history.push("/");
-        }
-      })
-      .catch((error) => alert(error.message));
->>>>>>> f118cd279fac0332c8a77f5f36373816aa21da58
   };
 
   return (
@@ -103,11 +83,7 @@ function Login() {
           />
 
           <button onClick={signIn} type="submit" className="login-signinbutton">
-<<<<<<< HEAD
-            Sign in
-=======
-            SIGN IN
->>>>>>> f118cd279fac0332c8a77f5f36373816aa21da58
+            Sign in SIGN IN
           </button>
         </form>
         <p>
