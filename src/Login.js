@@ -83,7 +83,7 @@ function Login() {
           />
 
           <button onClick={signIn} type="submit" className="login-signinbutton">
-            Sign in SIGN IN
+            SIGN IN
           </button>
         </form>
         <p>

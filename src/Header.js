@@ -5,7 +5,6 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Link } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
 import { auth } from "./Firebase";
-import { signOut } from "firebase/auth";
 
 function Header() {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -38,8 +37,16 @@ function Header() {
       <div className="header-nav">
         <Link to={!user && "/login"}>
           <div onClick={handleAuthentication} className="header-option">
-            <span className="header-optionlineone">Hello user</span>
-            <span className="header-optionlinetwo">
+            <span
+              style={{ textdecoration: "none" }}
+              className="header-optionlineone"
+            >
+              Hello {!user ? "User" : user.email}{" "}
+            </span>
+            <span
+              style={{ textdecoration: "none" }}
+              className="header-optionlinetwo"
+            >
               {user ? "Sign Out" : "Sign In"}
             </span>
           </div>
@@ -57,7 +64,10 @@ function Header() {
         <Link to="/Checkout">
           <div className="header-optionbasket">
             <ShoppingBasketIcon />
-            <span className="header-opyionlinetwo header-basketcount">
+            <span
+              style={{ textdecoration: "none" }}
+              className="header-optionlinetwo header-basketcount"
+            >
               {basket.length}
             </span>
           </div>

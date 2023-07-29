@@ -9,11 +9,15 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.1",
+    "@stripe/react-stripe-js": "^2.1.1",
+    "@stripe/stripe-js": "^1.54.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.4.0",
     "babel-preset-es2015": "^6.24.1",
     "firebase": "^9.23.0",
+    "node": "^20.5.0",
     "react": "^18.2.0",
     "react-currency-format": "^1.1.0",
     "react-dom": "^18.2.0",
@@ -22,8 +26,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -56,5 +60,5 @@
   "bugs": {
     "url": "https://github.com/AdarshSonar2012/amazone-clone/issues"
   },
-   "homepage": "https://github.com/AdarshSonar2012/amazone-clone#readme"
+  "homepage": "."
 }
