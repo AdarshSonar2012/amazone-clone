@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Checkout from "./Checkout";
 import Login from "./Login";
 import { auth } from "./Firebase";
+import Orders from "./Orders";
 import Payment from "./Payment";
 import { useStateValue } from "./StateProvider";
 import { loadStripe } from "@stripe/stripe-js";
@@ -41,6 +42,15 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
+        <Route
+            path="/orders"
+            element={
+              <Fragment>
+                <Header />
+                <Orders />
+              </Fragment>
+            }
+          />
           <Route
             path="/login"
             element={
