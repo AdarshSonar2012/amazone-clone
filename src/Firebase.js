@@ -3,7 +3,6 @@ import "firebase/firestore"
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCeJOBY8dpbZpKkw4ChFyu1W96demeAvtY",
   authDomain: "e-clone-5035e.firebaseapp.com",
@@ -18,16 +17,5 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
-// createUserWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     // Signed in
-//     const user = userCredential.user;
-//     // ...
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // ..
-//   });
 
 export { db, auth, firebaseApp, getAuth };

@@ -8,13 +8,11 @@ import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "./reducer.js";
 import axios from "./axios";
 import { useNavigate } from "react-router-dom";
-import { db } from "./Firebase.js";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { getFirestore } from "./Firebase.js";
-//import collection from "firebase/firestore";
-import { doc, setDoc } from "firebase/firestore";
+import { db } from "./Firebase";
+import { collection, getFirestore, setDoc } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { doc,addDoc} from "firebase/firestore";
 import { type } from "os";
-
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -26,8 +24,7 @@ function Payment() {
   const [processing, setProcessing] = useState("");
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(true);
-  const [clientSecret, setClientSecret] = useState(true);
-  const stringClientSecret = clientSecret.toString();
+  const [clientSecret, setClientSecret] = useState("");
 
   useEffect( () => {
     const getClientSecret = async () => {
@@ -44,6 +41,7 @@ function Payment() {
   console.log("The Secret Is >>>", clientSecret);
   console.log("**",user);
 
+
   const handleSubmit = async (event) => {
     //stripe stuff
     event.preventDefault();
@@ -51,25 +49,19 @@ function Payment() {
 
     const payload = await stripe
       .confirmCardPayment(
-        stringClientSecret,
+        clientSecret,
          {payment_method:{
         type: 'card', 
         card: elements.getElement(CardElement),
   },},)
-      .then(({ paymentIntent}) => {
-        //paymentIntent = payment confirmation
-        const paymentRef = doc(db, collection,"users" ,user && user.uid, "orders",paymentIntent.id);
+      .then(({id,amount,created}) => {
+          const Ref=doc(db,"users",user && user.uid,"orders","user.id")
+          // destructured id from paymentIntent object
+          setDoc(Ref,
+              {basket: basket},
+              {amount}, // destructured amount from paymentIntent object
+              {created});
 
-        // db
-          // .collection('users')
-          // .doc(user.uid)
-          // .collection('orders')
-          // .doc(paymentIntent.id)
-          db.set(paymentRef,{
-            basket: basket,
-            amount: paymentIntent.amount,
-            created: paymentIntent.created
-          });
         setSucceeded(true);
         setError(null);
         setProcessing(false);
@@ -79,7 +71,8 @@ function Payment() {
         })
 
         navigate('/orders',{replace: true});
-      });
+      }
+      );
   };
   const handleChange = (e) => {
     setDisabled(Event.empty);
@@ -151,5 +144,4 @@ function Payment() {
     </div>
   );
 }
-
 export default Payment;
