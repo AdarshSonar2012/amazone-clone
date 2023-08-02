@@ -16,7 +16,6 @@ function Orders() {
     const ref = collection(db, 'users',user.uid, 'orders');
     const orderedOrders = query(ref, orderBy('created', 'desc'))
     onSnapshot(orderedOrders, snapshot => {
-
         setOrders(snapshot.docs.map(doc => ({
             id: doc.id,
             data: doc.data()
