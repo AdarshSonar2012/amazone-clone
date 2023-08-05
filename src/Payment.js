@@ -3,17 +3,21 @@ import "./Payment.css";
 import { useStateValue } from "./StateProvider";
 import CheckoutProduct from "./CheckoutProduct";
 import { Link } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "./reducer.js";
 import axios from "./axios";
 import { useNavigate } from "react-router-dom";
 import { db } from "./Firebase";
-import { collection, getFirestore, setDoc } from "firebase/firestore";
+import { paymentIntent } from "@stripe/stripe-js";
+import { collection, documentId, getFirestore, setDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { doc,addDoc} from "firebase/firestore";
 import { type } from "os";
-
+const promise = loadStripe(
+  "pk_test_51NXlQYSGpBilv2OQWMtFdj7D88OkR9k0LkMxwgw3ToBuoeukYVdUYOXcLvrAimzjBHApX4aTGavhgAbDOOBRiaZt00gFawE1EQ"
+);
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
   const stripe = useStripe();
@@ -24,7 +28,7 @@ function Payment() {
   const [processing, setProcessing] = useState("");
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(true);
-  const [clientSecret, setClientSecret] = useState("");
+  const [clientSecret, setClientSecret] = useState(true);
 
   useEffect( () => {
     const getClientSecret = async () => {
@@ -47,32 +51,38 @@ function Payment() {
     event.preventDefault();
     setProcessing(true);
 
-    const payload = await stripe
-      .confirmCardPayment(
-        clientSecret,
-         {payment_method:{
+    const payload = await stripe.confirmCardPayment(clientSecret,{
+      payment_method:{
         type: 'card', 
         card: elements.getElement(CardElement),
-  },},)
-      .then(({id,amount,created}) => {
-          const Ref=doc(db,"users",user && user.uid,"orders","user.id")
-          // destructured id from paymentIntent object
-          setDoc(Ref,
-              {basket: basket},
-              {amount}, // destructured amount from paymentIntent object
-              {created});
+      }}
+      ).then(({paymentIntent}) => {
+          const Ref=doc(db,"users",user && user.uid,"orders",paymentIntent.id)
+          try{setDoc(Ref,
+              {basket: basket,
+              amount: paymentIntent.amount,
+              created: paymentIntent.created}
+              );
 
         setSucceeded(true);
         setError(null);
         setProcessing(false);
 
-        dispatch({
-          type:"EMPTY_BASKET",
-        })
+        // dispatch({
+        //   type:"EMPTY_BASKET",
+        // })
 
         navigate('/orders',{replace: true});
+      }catch(err){
+        console.log('This is the error',err)
       }
-      );
+      })
+      .catch((err) => {
+        console.log(err)
+        alert(`Unable to process payment\nUse a sequence of "42" for card payment`)
+        setError(null)
+        setProcessing(false)
+      })
   };
   const handleChange = (e) => {
     setDisabled(Event.empty);

@@ -44,16 +44,7 @@ function Login() {
         // ...
       })
       .catch((error) => alert(error.message));
-    // const auth = getAuth();
-    // createUserWithEmailAndPassword(auth, email, password)
-    //   .then((userCredential) => {
-    //     console.log(auth);
-    //     const user = userCredential;
-    //     if (auth) {
-    //       history("/");
-    //     }
-    //   })
-    //   .catch((error) => alert(error.message));
+    
   };
 
   return (

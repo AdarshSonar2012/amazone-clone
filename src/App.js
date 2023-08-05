@@ -45,11 +45,12 @@ function App() {
         <Routes>
         <Route
             path="/orders"
-            element={
+            element={<>
               <Fragment>
                 <Header />
                 <Orders />
               </Fragment>
+              </>
             }
           />
           <Route

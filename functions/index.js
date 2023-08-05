@@ -12,13 +12,14 @@ const stripe = require("stripe")(
 const app = express();
 
 //~ Middlewares
-app.use(cors({ origin: true }));
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 })
+app.use(cors({ origin: true }));
+
 app.use(express.json());
 
 //~ API routes
@@ -31,8 +32,7 @@ app.post("/payments/create", async (request , response) => {
   
   const paymentIntent = await stripe.paymentIntents.create({
     amount: total, //subunits of the currency
-    currency: "usd",
-    payment_method_types:["card"],
+    currency: "INR",//usd shows undefined id error
   });
   response.status(201).send({
     clientSecret: paymentIntent.client_secret,
