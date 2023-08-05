@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import './Orders.css'
 import { db } from './Firebase';
-import {query, collection, onSnapshot, orderBy, doc,setDoc, onSnapshotsInSync} from 'firebase/firestore'
+import {query,collection, onSnapshot, orderBy} from 'firebase/firestore'
 import Order from './Order';
 import { useStateValue } from './StateProvider';
 
@@ -11,19 +11,17 @@ function Orders() {
 
   useEffect(() => {
     if(user){
-    const ref = collection(db,"user",user.uid,"orders")
-    const orderedOrders = query(ref, orderBy('created', 'desc'))
-    onSnapshot(orderedOrders,docsSnap => {
-         setOrders(docsSnap.forEach.map(doc => ({
-          id: doc.id,
-          data: doc.data() 
-         console.log(doc.data)
-
-         })))
-      })  
-      console.log("hi")
+    const collRef = collection(db, "users", user&& user.uid, "orders");
+      const orderedRef = query(collRef, orderBy("created", "desc"));
+      onSnapshot(orderedRef, (querySnapshot) => {
+        setOrders(
+          querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        );
+      });
     } else {
-      console.log("hi from else part")
       setOrders([])
     }
   }, [user])
@@ -31,7 +29,7 @@ function Orders() {
     <div className='orders'>
       <h1>Your Orders</h1>
       <div className='orders-order'>
-        {orders&&orders.map(order => (
+        {orders && orders.map((order) => (
         <Order order={order}/>
         ))}
       </div>
