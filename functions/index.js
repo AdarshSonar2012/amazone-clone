@@ -5,39 +5,27 @@ const stripe = require("stripe")(
   "sk_test_51NXlQYSGpBilv2OQlTIy6ODF0SL5Uu6A4fzUBchONYp5JrOD4LbLwgthS0B22yDgHojwVR2nDkYc51REUAWbqh1R00bHYJYmXE"
 );
 
-//API
-
-
-//~ App config
+// API 
+// ~ App config
 const app = express();
-
-//~ Middlewares
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-})
-app.use(cors({ origin: true }));
-
+// ~ Middlewares
+app.use(cors({origin: true}));
 app.use(express.json());
 
-//~ API routes
+// ~ API routes
 app.get("/", ( request, response) => response.status(200).send("hello world"));
 
-app.post("/payments/create", async (request , response) => {
+app.post("/payments/create", async (request, response) => {
   const total = request.query.total;
-
   console.log("payment request received BOOM for this amount >>>", total);
-  
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: total, //subunits of the currency
-    currency: "INR",//usd shows undefined id error
+    amount: total,
+    currency: "INR",
   });
   response.status(201).send({
     clientSecret: paymentIntent.client_secret,
   });
 });
 
-//~ Listen command
+// ~ Listen command
 exports.api = functions.https.onRequest(app);

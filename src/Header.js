@@ -14,9 +14,6 @@ function Header() {
       auth.signOut().then(() => {
         console.log("Signed out successfully");
       });
-      // auth.signOut().then(() => {
-      //   console.log("Signed out successfully");
-      // });
     }
   };
 
@@ -51,11 +48,12 @@ function Header() {
             </span>
           </div>
         </Link>
-
+        <Link to='/orders'>
         <div className="header-option">
           <span className="header-optionlineone">Returns</span>
-          <span className="header-optionlinetwo">Orders</span>
+          <span className="header-optionlinetwo">& Orders</span>
         </div>
+        </Link>
 
         <div className="header-option">
           <span className="header-optionlineone">Your</span>

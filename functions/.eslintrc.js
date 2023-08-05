@@ -7,6 +7,7 @@ module.exports = {
     "ecmaVersion": 2018,
   },
   extends: [
+    "react-app",
     "eslint:recommended",
     "google",
   ],

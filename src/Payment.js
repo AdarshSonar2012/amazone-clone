@@ -11,8 +11,7 @@ import axios from "./axios";
 import { useNavigate } from "react-router-dom";
 import { db } from "./Firebase";
 import { paymentIntent } from "@stripe/stripe-js";
-import { collection, documentId, getFirestore, setDoc } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
+import { setDoc } from "firebase/firestore";
 import { doc,addDoc} from "firebase/firestore";
 import { type } from "os";
 const promise = loadStripe(
@@ -68,9 +67,9 @@ function Payment() {
         setError(null);
         setProcessing(false);
 
-        // dispatch({
-        //   type:"EMPTY_BASKET",
-        // })
+        dispatch({
+          type:"EMPTY_BASKET",
+        })
 
         navigate('/orders',{replace: true});
       }catch(err){

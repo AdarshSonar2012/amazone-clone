@@ -18,10 +18,30 @@
   border-bottom: 1px solid lightgray;
 }
 .payment-title {
-  flex: 0.2;
+  flex: 0.27;
+}
+.payment-title > h3{
+  margin-right: 25px;
 }
 .payment-address,
 .payment-item,
 .payment-details {
   flex: 0.8;
+}
+.payment-details > form {
+  max-width: 400px;
+}
+.payment-details .payment-priceContainer > h3 {
+  padding-top: 20px;
+}
+.payment-details > form > div > button {
+  background-color: #f0c14b;
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid;
+  margin-top: 10px;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: #111;
+  cursor: pointer;
 }
