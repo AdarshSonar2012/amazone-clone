@@ -13,7 +13,6 @@ import { db } from "./Firebase";
 import { paymentIntent } from "@stripe/stripe-js";
 import { setDoc } from "firebase/firestore";
 import { doc,addDoc} from "firebase/firestore";
-import { type } from "os";
 const promise = loadStripe(
   "pk_test_51NXlQYSGpBilv2OQWMtFdj7D88OkR9k0LkMxwgw3ToBuoeukYVdUYOXcLvrAimzjBHApX4aTGavhgAbDOOBRiaZt00gFawE1EQ"
 );
@@ -29,28 +28,26 @@ function Payment() {
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState(true);
 
-  useEffect( () => {
+useEffect( () => {
     const getClientSecret = async () => {
         const response = await axios({
-        method:"post",
-        url:`/payments/create?total=${Math.trunc(getBasketTotal(basket) * 100)}`
+          method:"post",
+          url:`/payments/create?total=${Math.trunc(getBasketTotal(basket) * 100)}`
     });
     setClientSecret(response.data.clientSecret);
-
     };
     getClientSecret();
-  }, [basket]);
+    }, [basket]);
 
   console.log("The Secret Is >>>", clientSecret);
   console.log("**",user);
-
+  
 
   const handleSubmit = async (event) => {
     //stripe stuff
     event.preventDefault();
     setProcessing(true);
-
-    const payload = await stripe.confirmCardPayment(clientSecret,{
+    const payload= await stripe.confirmCardPayment(clientSecret,{
       payment_method:{
         type: 'card', 
         card: elements.getElement(CardElement),
